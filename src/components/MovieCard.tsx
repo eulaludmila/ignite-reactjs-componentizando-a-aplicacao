@@ -1,32 +1,36 @@
 import { Star, Clock } from 'react-feather';
 
 import '../styles/movie-card.scss';
+import { memo } from 'react';
 
 interface MovieCardProps {
-  title: string;
-  poster: string;
-  rating: string;
-  runtime: string;
+  movie: {
+    Title: string;
+    Poster: string;
+    Ratings: [{Value: string}]
+    Runtime: string;
+
+  }
 }
 
-export function MovieCard(props: MovieCardProps) {
+export function MovieCardComponent({movie}: MovieCardProps) {
   return (
     <div className="movie-card">
       <img
-        src={props.poster}
-        alt={props.title}
+        src={movie.Poster}
+        alt={movie.Title}
       />
 
       <div>
         <div className="movie-info">
-          <span>{props.title}</span>
+          <span>{movie.Title}</span>
           <div className="meta">
             <div>
-              <Star /> {props.rating}
+              <Star /> {movie.Ratings[0].Value}
             </div>
 
             <div>
-              <Clock /> {props.runtime}
+              <Clock /> {movie.Runtime}
             </div>
           </div>
         </div>
@@ -34,3 +38,8 @@ export function MovieCard(props: MovieCardProps) {
     </div>
   )
 }
+
+export const MovieCard: any = memo(MovieCardComponent, (prevProps, nextProps) => {
+    //condição para satisfazer se vai ter informações iguais ou não
+    return Object.is(prevProps.movie, nextProps.movie)
+  })

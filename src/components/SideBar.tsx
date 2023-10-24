@@ -11,7 +11,7 @@ interface SideBarProps {
   selectedGenreId: number
 }
 
-export function SideBar(props: SideBarProps) {
+export function SideBar({selectedGenreId, handleClickButton}: SideBarProps) {
   const [genres, setGenres] = useState<GenreResponseProps[]>([]);
 
   useEffect(() => {
@@ -29,8 +29,8 @@ export function SideBar(props: SideBarProps) {
             key={String(genre.id)}
             title={genre.title}
             iconName={genre.name}
-            onClick={() => props.handleClickButton(genre.id)}
-            selected={props.selectedGenreId === genre.id}
+            onClick={() => handleClickButton(genre.id)}
+            selected={selectedGenreId === genre.id}
           />
         ))}
       </div>
